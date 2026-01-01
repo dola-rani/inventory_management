@@ -1,21 +1,25 @@
 from models.product import Product
-from models.perishable_product import PerishableProduct
-from models.supplier import Supplier
 from models.order import Order
-p1 = Product(1, "MacBook", 220000, 10)
-p1.add_stock(7)
-p1.reduce_stock(2)
-print(p1)
+from services.inventory_service import InventoryService
+from services.order_service import OrderService
+from services.report_service import ReportService
 
-p2 = PerishableProduct(2, "Drinks", 80, 20, "2025-01-10")
-print(f"{p2.name} expired? {p2.is_expired('2025-01-11')}")
+inventory = InventoryService()
+order_service = OrderService()
+report_service = ReportService()
 
+p1 = Product(1, "Laptop", 75000, 10)
+p2 = Product(2, "Mouse", 1200, 3)
 
-s1 = Supplier(1, "ABC Traders", "0123456789")
-print(s1)
+inventory.add_product(p1)
+inventory.add_product(p2)
 
+order = Order(101, p1, 2)
+order_service.place_order(order)
 
-order1 = Order(101, p1, 2)
-order1.process_order()
-print(order1)
-print(p1)  # Check updated stock
+print(order)
+
+low_stock = report_service.low_stock_report(inventory.list_products(), 5)
+print("\nLow stock items:")
+for item in low_stock:
+    print(item)
