@@ -8,8 +8,8 @@ inventory = InventoryService()
 order_service = OrderService()
 report_service = ReportService()
 
-p1 = Product(1, "Laptop", 75000, 10)
-p2 = Product(2, "Mouse", 1200, 3)
+p1 = Product(1, "MacBook", 220000, 50)
+p2 = Product(2, "Mouse", 1700, 3)
 
 inventory.add_product(p1)
 inventory.add_product(p2)
