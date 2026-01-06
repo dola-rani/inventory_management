@@ -1,9 +1,16 @@
 class ReportService:
-    def low_stock_report(self, products, threshold=5):
-        low_stock_items = []
+    def __init__(self, inventory_service):
+        self.inventory_service = inventory_service
 
-        for product in products:
-            if product.quantity <= threshold:
-                low_stock_items.append(product)
+    def total_inventory_value(self):
+        total = 0
+        for product in self.inventory_service.list_products():
+            total += product.price * product.quantity
+        return total
 
-        return low_stock_items
+    def low_stock_products(self, threshold):
+        return [
+            product
+            for product in self.inventory_service.list_products()
+            if product.quantity < threshold
+        ]
