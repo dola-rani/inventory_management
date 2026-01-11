@@ -9,7 +9,6 @@ from services.supplier_service import SupplierService
 
 
 
-
 def select_supplier(supplier_service):
    suppliers = supplier_service.list_suppliers()
    if not suppliers:
@@ -32,9 +31,6 @@ def select_supplier(supplier_service):
        except ValueError:
            print(" Please enter a valid number.")
 
-
-
-
 def add_supplier_interactively(supplier_service):
    print("\n--- Add New Supplier ---")
 
@@ -42,7 +38,6 @@ def add_supplier_interactively(supplier_service):
    while True:
        name = input("Supplier Name: ").strip()
        contact = input("Supplier Contact: ").strip()
-
 
        if not name:
            print("Supplier name cannot be empty. Please enter a valid name.\n")
@@ -67,9 +62,6 @@ def add_supplier_interactively(supplier_service):
        except ValueError as e:
            print(f"  {e}. Please try again.\n")
 
-
-
-
 def add_product_interactively(inventory_service, supplier_service):
    print("\n--- Add New Product ---")
 
@@ -85,8 +77,6 @@ def add_product_interactively(inventory_service, supplier_service):
            if not name:
                print(" Product name cannot be empty. Please try again.")
                continue
-
-
            price_input = input("Price: ").strip()
            if not price_input:
                print("Price cannot be empty. Please try again.")
@@ -130,8 +120,6 @@ def add_product_interactively(inventory_service, supplier_service):
            print(f" {e}. Please try again.\n")
 
 
-
-
 def place_order_interactively(order_service, inventory_service):
    print("\n--- Place New Order ---")
 
@@ -154,7 +142,6 @@ def place_order_interactively(order_service, inventory_service):
                print(" Product ID cannot be empty.")
                continue
            product_id = int(product_id_input)
-
 
            product_data = next((p for p in products if p['product_id'] == product_id), None)
            if not product_data:
@@ -187,7 +174,6 @@ def place_order_interactively(order_service, inventory_service):
                        print(" Order cancelled.")
                        return
 
-
                # Convert price to float to fix Decimal error
                product_obj = Product(
                    product_data['product_id'],
@@ -195,7 +181,6 @@ def place_order_interactively(order_service, inventory_service):
                    float(product_data['price']),
                    product_data['quantity']
                )
-
 
                order = Order(None, product_obj, quantity)
                order_service.place_order(order)
@@ -205,9 +190,6 @@ def place_order_interactively(order_service, inventory_service):
 
        except ValueError:
            print(" Please enter valid numbers.")
-
-
-
 
 def main():
    supplier_service = SupplierService()
@@ -224,23 +206,13 @@ def main():
        print("4. Show Inventory")
        print("5. Show Reports")
        print("6. Exit")
-
-
        choice = input("Enter your choice: ").strip()
-
-
        if choice == "1":
            add_supplier_interactively(supplier_service)
-
-
        elif choice == "2":
            add_product_interactively(inventory_service, supplier_service)
-
-
        elif choice == "3":
            place_order_interactively(order_service, inventory_service)
-
-
        elif choice == "4":
            products = inventory_service.list_products()
            if not products:
@@ -252,24 +224,18 @@ def main():
                    supplier_name = supplier['name'] if supplier else "N/A"
                    expiry = f"| Expiry: {p['expiry_date']}" if p.get('expiry_date') else ""
                    print(f"{p['name']} | Price: {p['price']} | Stock: {p['quantity']} | Supplier: {supplier_name} {expiry}")
-
-
        elif choice == "5":
            print("\n--- Reports ---")
            print("Total Inventory Value:", report_service.total_inventory_value())
            low_stock = report_service.low_stock_products(5)
            print("Low Stock Products:", [p['name'] for p in low_stock])
 
-
        elif choice == "6":
            print("Exiting program...")
            break
 
-
        else:
            print("Invalid choice. Try again.")
-
-
 
 
 if __name__ == "__main__":

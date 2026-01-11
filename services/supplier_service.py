@@ -95,14 +95,11 @@ def validate_positive_int(value, field_name, allow_none=False):
            return
        raise TypeError(f"{field_name} cannot be None")
 
-
    if not isinstance(value, int):
        raise TypeError(f"{field_name} must be an integer")
 
    if value <= 0:
        raise ValueError(f"{field_name} must be greater than zero")
-
-
 
 
 def validate_price(price):
