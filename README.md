@@ -1,4 +1,4 @@
-Inventory Management System
+**Inventory Management System**
 
 A console-based inventory management system built with Python and PostgreSQL.
 This system allows managing products (regular & perishable), suppliers, orders, and inventory reports via an interactive CLI (Command-Line Interface).
